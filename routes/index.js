@@ -7,5 +7,8 @@ const auth = require('../auth/auth')
 router.post('/register', userControl.register)
 router.post('/login', userControl.login)
 router.post('/articles', auth.isLogin, auth.authorisasi, articleControl.create)
+router.get('/articles', articleControl.getArticle)
+router.put('/article/:id', auth.isLogin, auth.authorisasi, articleControl.update)
+router.get('/article/:id', articleControl.getOne)
 
 module.exports = router
