@@ -1,8 +1,6 @@
 const models = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const secret = process.env.SECRET
-require('dotenv').config()
 
 var register = (req, res) => {
   console.log('req body', req.body)
@@ -28,29 +26,27 @@ var login = (req, res) => {
   models.findOne({
       username: req.body.username
   })
-    .then(result => {
-      console.log('resul', result)
-      if (result === null) {
-        res.send('username tidak ada')
+  .then(result => {
+    if (result == null) {
+      res.send('username tidak ada')
+    } else {
+      let password = req.body.password
+      if (bcrypt.compareSync(password, result.password)) {
+        console.log('password', result.password)
+        let token = jwt.sign({
+          _id: result._id,
+          username: result.username,
+          email: result.email
+        }, process.env.SECRET)
+        res.send({msg: 'Login Ok', token: token})
       } else {
-        console.log('pass', password)
-        let password = req.body.password
-        if (bcrypt.compareSync(password, result.password)) {
-          let token = jwt.sign({
-            _id: result._id,
-            username: result.username,
-            email: result.email
-          }, secret)
-          console.log('token', token)
-          res.send({msg: 'Login Ok', token: token})
-        } else {
-          res.send('password salah')
-        }
+        res.send('Password Salah')
       }
-    })
-    .catch(err => {
-      res.send(err)
-    })
+    }
+  })
+  .catch(err => {
+    res.send(err)
+  })
 }
 
 
