@@ -3,11 +3,22 @@
     <div>
       <div >
         <form method="post" @submit.prevent="addArticle()">
-          <input type="text" name="todo" placeholder="input todo " v-model="post.title">
-          <input type="text" name="todo" placeholder="input todo " v-model="post.content">
-          <input type="text" name="todo" placeholder="input todo " v-model="post.category">
+          <input type="text" name="article" placeholder="input article " v-model="post.title">
+          <input type="text" name="article" placeholder="input article " v-model="post.content">
+          <input type="text" name="article" placeholder="input article " v-model="post.category">
           <button name="button">add article</button>
         </form>
+      </div>
+      <div>
+        <tbody>
+          <tr v-for="article in articles">
+            <td>{{ article.title }}</td>
+            <td>{{ article.content }}</td>
+            <td>{{ article.category }}</td>
+            <td>{{ article.author }}</td>
+            <!-- <td><button type="submit" @click="deletearticle(article._id)">hapus</button></td> -->
+          </tr>
+        </tbody>
       </div>
     </div>
   </div>
