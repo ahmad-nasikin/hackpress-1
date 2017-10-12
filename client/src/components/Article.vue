@@ -16,9 +16,12 @@
             <td>{{ article.content }}</td>
             <td>{{ article.category }}</td>
             <td>{{ article.author }}</td>
-            <!-- <td><button type="submit" @click="deletearticle(article._id)">hapus</button></td> -->
+            <td><button type="submit" @click="deleteArticle(article._id)">hapus</button></td>
           </tr>
         </tbody>
+      </div>
+      <div>
+        <button type="button" class="" @click="logout()">Logout</button>
       </div>
     </div>
   </div>
@@ -66,16 +69,16 @@ export default {
         console.error(err)
       })
     },
-    // deleteArticle (data, index) {
-    //   this.$http.delete(`/article/${data}`, {
-    //     headers: {
-    //       token: localStorage.getItem('token')
-    //     }
-    //   })
-    //   .then(response => {
-    //     self.articles.splice(index, 1)
-    //   })
-    // },
+    deleteArticle (data, index) {
+      this.$http.delete(`/article/${data}`, {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(response => {
+        this.articles.splice(index, 1)
+      })
+    },
     logout () {
       localStorage.clear()
     }
