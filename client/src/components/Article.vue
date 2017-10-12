@@ -59,6 +59,7 @@ export default {
         }
       })
       .then(result => {
+        console.log('result add', result)
         this.articles.push(result.data)
       })
       .catch(err => {

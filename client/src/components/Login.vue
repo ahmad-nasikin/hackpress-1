@@ -52,7 +52,7 @@ export default {
       .then((Response) => {
         console.log('res', Response)
         localStorage.setItem('token', Response.data.token)
-        this.$router.push('/article')
+        this.$router.push('/articles')
       })
       .catch((err) => {
         console.error(err)
