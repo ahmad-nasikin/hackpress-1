@@ -35,37 +35,59 @@ var update = (req, res) => {
       _id: req.params.id
   })
   .then(resultUser => {
-      if (req.headers.auth._id == resultUser.author) {
-      models.update({
-          _id: req.params.id
-      }, {
-        title: req.body.title,
-        content: req.body.content,
-        category: req.body.category
-      })
-      .then(result => {
-          res.send(result)
-      })
-      .catch(err => {
-          res.send(err)
-      })
-      } else {
-          res.send('tidak authorize')
-      }
+    if (req.headers.auth._id == resultUser.author) {
+    models.update({
+        _id: req.params.id
+    }, {
+      title: req.body.title,
+      content: req.body.content,
+      category: req.body.category
+    })
+    .then(result => {
+        res.send(result)
+    })
+    .catch(err => {
+        res.send(err)
+    })
+    } else {
+        res.send('tidak authorize')
+    }
   })
 }
 
 var getOne = (req, res) => {
   models.findOne({
-      _id: req.params.id
+    _id: req.params.id
   })
   .then(result => {
       console.log('article', result)
-      res.send(result)
+    res.send(result)
   })
   .catch(err => {
-      res.send(err)
+    res.send(err)
   })
 }
 
-module.exports = {create,getArticle,update,getOne}
+var deleteArticle = (req, res) => {
+  models.findById({
+      _id: req.params.id
+  })
+  .then((resultArt) => {
+      console.log('result', resultArt)
+    if (req.headers.auth._id == resultArt.author) {
+        models.remove({
+          _id: req.params.id
+        })
+        .then(result => {
+          res.send(result)
+        })
+        .catch(err => {
+          res.send(err)
+        })
+    } else {
+      res.send('tidak authorize')
+    }
+  })
+}
+
+module.exports = {create,getArticle,update,getOne,deleteArticle}
