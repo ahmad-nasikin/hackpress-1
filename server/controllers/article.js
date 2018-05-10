@@ -16,8 +16,10 @@ var create = (req, res) => {
   })
   .catch((err) => {
     res.send(err)
-  }) 
+  })
 }
+
+//get article
 
 var getArticle = (req, res) => {
   models.find({})
